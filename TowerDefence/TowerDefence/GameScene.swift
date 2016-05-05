@@ -15,6 +15,7 @@ class GameScene: SKScene {
     var boxSize: CGFloat!
     var gridStart: CGPoint!
     var graph: GKGridGraph!
+    var enemies = [GKEntity]()
 
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
@@ -26,6 +27,7 @@ class GameScene: SKScene {
 //        self.addChild(myLabel)
         createGrid()
         graph = GKGridGraph(fromGridStartingAt: int2(0,0), width: Int32(width), height: Int32(height), diagonalsAllowed: false)
+        createEnemies()
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -109,5 +111,40 @@ class GameScene: SKScene {
         gridStart = CGPointMake(offsetX, offsetY)
         grid.position = CGPointMake(offsetX, offsetY)
         addChild(grid)
+    }
+    
+    func createEnemies() {
+        let enemy = GKEntity()
+        let gridPosition = int2(0, Int32(height) / 2)
+        let destination = int2(Int32(width) - 1, Int32(height) / 2)
+        
+        let sprite = SKSpriteNode(color: UIColor.redColor(), size: CGSize(width: boxSize * 0.6, height: boxSize * 0.6))
+        sprite.position = pointForCoordinate(gridPosition)
+        
+        let movementComponent = MovementComponent(scene: self, sprite: sprite, coordinate: gridPosition, destination: destination)
+        enemy.addComponent(movementComponent)
+        
+        enemies.append(enemy)
+        
+        var sequence = [SKAction]()
+        
+        for enemy in enemies {
+            let action = SKAction.runBlock() { [unowned self] in
+                let movementComponent = enemy.componentForClass(MovementComponent)!
+                self.addChild(movementComponent.sprite)
+                
+                // update path
+                
+                // temporary code to add movement
+                let path = movementComponent.pathToDestination()
+                movementComponent.followPath(path)
+            }
+            
+            let delay = SKAction.waitForDuration(2)
+            
+            sequence += [action, delay]
+        }
+        
+        runAction(SKAction.sequence(sequence))
     }
 }
