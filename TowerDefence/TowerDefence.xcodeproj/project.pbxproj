@@ -15,6 +15,7 @@
 		958353231CDB5D450099E5C9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 958353221CDB5D450099E5C9 /* Assets.xcassets */; };
 		958353261CDB5D450099E5C9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 958353241CDB5D450099E5C9 /* LaunchScreen.storyboard */; };
 		958353311CDB5D450099E5C9 /* TowerDefenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 958353301CDB5D450099E5C9 /* TowerDefenceTests.swift */; };
+		95C57DA91CDB6D77006AB0F1 /* VisualComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95C57DA81CDB6D77006AB0F1 /* VisualComponent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,7 @@
 		9583532C1CDB5D450099E5C9 /* TowerDefenceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TowerDefenceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		958353301CDB5D450099E5C9 /* TowerDefenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TowerDefenceTests.swift; sourceTree = "<group>"; };
 		958353321CDB5D450099E5C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		95C57DA81CDB6D77006AB0F1 /* VisualComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualComponent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +86,7 @@
 				958353171CDB5D450099E5C9 /* AppDelegate.swift */,
 				958353191CDB5D450099E5C9 /* GameScene.sks */,
 				9583531B1CDB5D450099E5C9 /* GameScene.swift */,
+				95C57DA81CDB6D77006AB0F1 /* VisualComponent.swift */,
 				9583531D1CDB5D450099E5C9 /* GameViewController.swift */,
 				9583531F1CDB5D450099E5C9 /* Main.storyboard */,
 				958353221CDB5D450099E5C9 /* Assets.xcassets */,
@@ -207,6 +210,7 @@
 				9583531C1CDB5D450099E5C9 /* GameScene.swift in Sources */,
 				9583531E1CDB5D450099E5C9 /* GameViewController.swift in Sources */,
 				958353181CDB5D450099E5C9 /* AppDelegate.swift in Sources */,
+				95C57DA91CDB6D77006AB0F1 /* VisualComponent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -399,6 +403,7 @@
 				958353371CDB5D450099E5C9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		958353381CDB5D450099E5C9 /* Build configuration list for PBXNativeTarget "TowerDefenceTests" */ = {
 			isa = XCConfigurationList;
@@ -407,6 +412,7 @@
 				9583533A1CDB5D450099E5C9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
