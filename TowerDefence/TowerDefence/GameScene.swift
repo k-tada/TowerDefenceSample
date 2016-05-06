@@ -16,6 +16,7 @@ class GameScene: SKScene {
     var gridStart: CGPoint!
     var graph: GKGridGraph!
     var enemies = [GKEntity]()
+    var pathLine: SKNode!
 
     override func didMoveToView(view: SKView) {
         /* Setup your scene here */
@@ -28,6 +29,9 @@ class GameScene: SKScene {
         createGrid()
         graph = GKGridGraph(fromGridStartingAt: int2(0,0), width: Int32(width), height: Int32(height), diagonalsAllowed: false)
         createEnemies()
+        
+        pathLine = SKNode()
+        addChild(pathLine)
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -77,14 +81,60 @@ class GameScene: SKScene {
             addChild(towerSprite)
             
             graph.removeNodes([node])
+            
             // update path
+            updatePathForEntities(enemies)
+        }
+    }
+    
+    func updatePathForEntities(entities: [GKEntity]) {
+        for entity in entities {
+            if let movementComponent = entity.componentForClass(MovementComponent) {
+                movementComponent.sprite.removeAllActions()
+                
+                var path = movementComponent.pathToDestination()
+                path.removeAtIndex(0)
+                
+                // update visual path
+                updateVisualPath(path)
+                
+                movementComponent.followPath(path)
+            }
+        }
+    }
+    
+    func updateVisualPath(path: [GKGridGraphNode]) {
+        pathLine.removeAllChildren()
+        
+        var index = 0
+        
+        for node in path {
+            let position = pointForCoordinate(node.gridPosition)
+            
+            if index + 1 < path.count {
+                let nextPosition = pointForCoordinate(path[index + 1].gridPosition)
+                let bezierPath = UIBezierPath()
+                let startPoint = CGPointMake(position.x, position.y)
+                let endPoint = CGPointMake(nextPosition.x, nextPosition.y)
+                bezierPath.moveToPoint(startPoint)
+                bezierPath.addLineToPoint(endPoint)
+                
+                let pattern: [CGFloat] = [CGFloat(boxSize / 10), CGFloat(boxSize / 10)]
+                let dashed = CGPathCreateCopyByDashingPath(bezierPath.CGPath, nil, 0, pattern, 2)!
+                
+                let line = SKShapeNode(path: dashed)
+                line.strokeColor = UIColor.blackColor()
+                pathLine.addChild(line)
+            }
+            
+            index += 1
         }
     }
     
     func pointForCoordinate(coordinate: int2) -> CGPoint {
         return CGPointMake(CGFloat(coordinate.x) * boxSize + gridStart.x + boxSize / 2, CGFloat(coordinate.y) * boxSize + gridStart.y + boxSize / 2)
     }
-    
+
     func createGrid(){
         let grid = SKNode()
         
@@ -134,6 +184,7 @@ class GameScene: SKScene {
                 self.addChild(movementComponent.sprite)
                 
                 // update path
+                self.updatePathForEntities([enemy])
                 
                 // temporary code to add movement
                 let path = movementComponent.pathToDestination()
